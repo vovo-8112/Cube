@@ -19,9 +19,9 @@ public class RotationCubeControler : MonoBehaviour {
 
   private void Update() {
     if (Input.GetKeyDown(KeyCode.A)) {
-      RotationTest(SwipeDirection.Right);
-    } else if (Input.GetKeyDown(KeyCode.D))
       RotationTest(SwipeDirection.Left);
+    } else if (Input.GetKeyDown(KeyCode.D))
+      RotationTest(SwipeDirection.Right);
     else if (Input.GetKeyDown(KeyCode.W))
       RotationTest(SwipeDirection.Up);
     else if (Input.GetKeyDown(KeyCode.S))
@@ -34,10 +34,10 @@ public class RotationCubeControler : MonoBehaviour {
 
   private void RotationTest(SwipeDirection data) {
     switch (data) {
-      case SwipeDirection.Right:
+      case SwipeDirection.Left:
         _testGameObject.transform.RotateAround(_point, Vector3.up, 90);
         break;
-      case SwipeDirection.Left:
+      case SwipeDirection.Right:
         _testGameObject.transform.RotateAround(_point, Vector3.down, 90);
         break;
       case SwipeDirection.Up:
