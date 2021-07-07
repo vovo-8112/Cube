@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,7 +6,10 @@ public class RotationCubeControler : MonoBehaviour {
   private float _duration;
 
   [SerializeField]
-  private Camera _camera;
+  private Vector3 _point;
+
+  [SerializeField]
+  private GameObject _testGameObject;
 
   private Sequence _sequence;
 
@@ -17,72 +19,50 @@ public class RotationCubeControler : MonoBehaviour {
 
   private void Update() {
     if (Input.GetKeyDown(KeyCode.A)) {
-      RotationAnim(SwipeDirection.Left);
-    }
-
-    if (Input.GetKeyDown(KeyCode.W)) {
-      RotationAnim(SwipeDirection.Up);
-    }
-
-    if (Input.GetKeyDown(KeyCode.D)) {
-      RotationAnim(SwipeDirection.Right);
-    }
-
-    if (Input.GetKeyDown(KeyCode.S)) {
-      RotationAnim(SwipeDirection.Down);
-    }
+      RotationTest(SwipeDirection.Right);
+    } else if (Input.GetKeyDown(KeyCode.D))
+      RotationTest(SwipeDirection.Left);
+    else if (Input.GetKeyDown(KeyCode.W))
+      RotationTest(SwipeDirection.Up);
+    else if (Input.GetKeyDown(KeyCode.S))
+      RotationTest(SwipeDirection.Down);
   }
 
   private void SwipeDetector_OnSwipe(SwipeData data) {
-    RotationAnim(data.Direction);
+    RotationTest(data.Direction);
   }
 
-  public void RotationAnim(SwipeDirection data) {
-    if (_sequence == null) {
-      _sequence = DOTween.Sequence();
-    }
-
-    var transform1 = transform;
-    var rotation = transform1.localRotation;
-
+  private void RotationTest(SwipeDirection data) {
     switch (data) {
       case SwipeDirection.Right:
-        _sequence.Append(transform.DOLocalRotate(
-          new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y + 90,
-            rotation.eulerAngles.z), _duration));
+        _testGameObject.transform.RotateAround(_point, Vector3.up, 90);
         break;
       case SwipeDirection.Left:
-        _sequence.Append(transform.DOLocalRotate(
-          new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y - 90,
-            rotation.eulerAngles.z), _duration));
+        _testGameObject.transform.RotateAround(_point, Vector3.down, 90);
         break;
       case SwipeDirection.Up:
-        _sequence.Append(transform.DOLocalRotate(
-          new Vector3(rotation.eulerAngles.x + 90, rotation.eulerAngles.y,
-            rotation.eulerAngles.z), _duration));
+        _testGameObject.transform.RotateAround(_point, Vector3.right, 90);
         break;
       case SwipeDirection.Down:
-        _sequence.Append(transform.DOLocalRotate(
-          new Vector3(rotation.eulerAngles.x - 90, rotation.eulerAngles.y,
-            rotation.eulerAngles.z), _duration));
+        _testGameObject.transform.RotateAround(_point, Vector3.left, 90);
         break;
     }
 
-    // switch (data) {
-    //   case SwipeDirection.Right:
-    //     transform1.LookAt(_camera.transform.position, Vector3.up);
-    //     break;
-    //   case SwipeDirection.Left:
-    //
-    //     transform1.LookAt(_camera.transform.position, Vector3.down);
-    //     break;
-    //   case SwipeDirection.Up:
-    //     transform1.LookAt(_camera.transform.position, Vector3.right);
-    //
-    //     break;
-    //   case SwipeDirection.Down:
-    //     transform1.LookAt(_camera.transform.position, Vector3.left);
-    //     break;
-    // }
+    AnimRotationCube(_testGameObject.transform.rotation);
+  }
+
+  private void AnimRotationCube(Quaternion quaternion) {
+    if (_sequence != null) {
+      StopAnim();
+    }
+
+    _sequence = DOTween.Sequence();
+
+    _sequence.Append(transform.DORotateQuaternion(quaternion, _duration).SetAutoKill(true));
+  }
+
+  private void StopAnim() {
+    _sequence.Kill();
+    _sequence.Append(transform.DORotateQuaternion(_testGameObject.transform.rotation, _duration));
   }
 }
