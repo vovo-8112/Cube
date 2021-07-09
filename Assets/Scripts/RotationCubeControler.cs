@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -64,5 +65,9 @@ public class RotationCubeControler : MonoBehaviour {
   private void StopAnim() {
     _sequence.Kill();
     _sequence.Append(transform.DORotateQuaternion(_testGameObject.transform.rotation, _duration));
+  }
+
+  private void OnDestroy() {
+    SwipeDetector.OnSwipe -= SwipeDetector_OnSwipe;
   }
 }

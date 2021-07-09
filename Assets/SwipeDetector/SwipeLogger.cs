@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SwipeLogger : MonoBehaviour {
   private void Awake() {
@@ -7,5 +8,10 @@ public class SwipeLogger : MonoBehaviour {
 
   private void SwipeDetector_OnSwipe(SwipeData data) {
     Debug.Log("Swipe in Direction: " + data.Direction);
+  }
+
+  private void OnDestroy() {
+    SwipeDetector.OnSwipe -= SwipeDetector_OnSwipe;
+
   }
 }

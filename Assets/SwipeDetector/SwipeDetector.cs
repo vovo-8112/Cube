@@ -52,7 +52,6 @@ public class SwipeDetector : MonoBehaviour {
 #endif
   }
 
-
   private void DetectSwipe() {
     if (SwipeDistanceCheckMet()) {
       if (IsVerticalSwipe()) {
