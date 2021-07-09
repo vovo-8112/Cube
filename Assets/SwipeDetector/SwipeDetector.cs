@@ -30,7 +30,6 @@ public class SwipeDetector : MonoBehaviour {
       _fingerDownPosition = Input.mousePosition;
       DetectSwipe();
     }
-  }
 #else
 {
       foreach (Touch touch in Input.touches) {
@@ -51,6 +50,8 @@ public class SwipeDetector : MonoBehaviour {
     }
 }
 #endif
+  }
+
 
   private void DetectSwipe() {
     if (SwipeDistanceCheckMet()) {
