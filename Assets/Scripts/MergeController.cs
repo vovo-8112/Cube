@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SelectSide : MonoBehaviour {
+public class MergeController : MonoBehaviour {
   [SerializeField]
   private Camera _camera;
 

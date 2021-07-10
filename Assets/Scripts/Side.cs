@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = System.Random;
 
 public class Side : MonoBehaviour {
   [SerializeField]
   private Vector3 _scaleVector3;
 
   [SerializeField]
-  private GameObject _collider;
+  private Collider _collider;
 
   [SerializeField]
   private TextMeshPro _textMeshPro;
@@ -16,8 +17,11 @@ public class Side : MonoBehaviour {
   [SerializeField]
   private MeshRenderer _meshRenderer;
 
+  private int _num;
+
   private Vector3 _startPosition;
   private Vector3 _startScale;
+  private Vector3 _mergeVector = new Vector3(0, 0, -0.50001f);
 
   private Dictionary<int, string> colors = new Dictionary<int, string>() {
     {2, "#eee4da"},
@@ -34,12 +38,18 @@ public class Side : MonoBehaviour {
   };
 
   private void Awake() {
-    GetStartVector();
+    SetText(2);
     RotationCubeController.RotationText += RotateText;
   }
 
+  private void SetText(int val) {
+    _num = val;
+    _textMeshPro.text = _num.ToString();
+  }
+
   private void Start() {
-    SetColor(Int32.Parse(_textMeshPro.text));
+    SetColor(_num);
+    GetStartVector();
   }
 
   private void SetColor(int val) {
@@ -67,7 +77,7 @@ public class Side : MonoBehaviour {
     Transform transform1 = transform;
     transform1.position = _startPosition;
     transform1.localScale = _startScale;
-    _collider.gameObject.SetActive(false);
+    _collider.enabled = false;
   }
 
   public void SetMergeMode(Vector3 _movePoint) {
@@ -75,10 +85,14 @@ public class Side : MonoBehaviour {
     transform1.localScale = _scaleVector3;
     transform1.SetParent(gameObject.transform.parent.parent);
     transform1.position = _movePoint;
-    _collider.gameObject.SetActive(true);
+    _collider.enabled = true;
   }
 
   private void OnDestroy() {
     RotationCubeController.RotationText -= RotateText;
   }
+
+  // private void OnTriggerEnter(Collider other) {
+  //   other.GetComponent<Side>();
+  // }
 }
