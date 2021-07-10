@@ -1,7 +1,8 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
-public class RotationCubeControler : MonoBehaviour {
+public class RotationCubeController : MonoBehaviour {
   [SerializeField]
   private float _duration;
 
@@ -12,6 +13,7 @@ public class RotationCubeControler : MonoBehaviour {
   private GameObject _testGameObject;
 
   private Sequence _sequence;
+  public static event Action RotationText;
 
   private void Awake() {
     SwipeDetector.OnSwipe += SwipeDetector_OnSwipe;
@@ -19,20 +21,20 @@ public class RotationCubeControler : MonoBehaviour {
 
   private void Update() {
     if (Input.GetKeyDown(KeyCode.A)) {
-      RotationTest(SwipeDirection.Left);
+      RotationAnim(SwipeDirection.Left);
     } else if (Input.GetKeyDown(KeyCode.D))
-      RotationTest(SwipeDirection.Right);
+      RotationAnim(SwipeDirection.Right);
     else if (Input.GetKeyDown(KeyCode.W))
-      RotationTest(SwipeDirection.Up);
+      RotationAnim(SwipeDirection.Up);
     else if (Input.GetKeyDown(KeyCode.S))
-      RotationTest(SwipeDirection.Down);
+      RotationAnim(SwipeDirection.Down);
   }
 
   private void SwipeDetector_OnSwipe(SwipeData data) {
-    RotationTest(data.Direction);
+    RotationAnim(data.Direction);
   }
 
-  private void RotationTest(SwipeDirection data) {
+  private void RotationAnim(SwipeDirection data) {
     switch (data) {
       case SwipeDirection.Left:
         _testGameObject.transform.RotateAround(_point, Vector3.up, 90);
@@ -48,6 +50,7 @@ public class RotationCubeControler : MonoBehaviour {
         break;
     }
 
+    RotationText?.Invoke();
     AnimRotationCube(_testGameObject.transform.rotation);
   }
 

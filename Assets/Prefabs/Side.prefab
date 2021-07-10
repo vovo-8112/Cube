@@ -113,6 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scaleVector3: {x: 0.8, y: 0.8, z: 0.8}
   _collider: {fileID: 412347050750214347}
+  _textMeshPro: {fileID: 3742479604430386606}
+  _meshRenderer: {fileID: 412347049767027192}
 --- !u!1 &412347050750214347
 GameObject:
   m_ObjectHideFlags: 0

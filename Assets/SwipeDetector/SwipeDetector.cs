@@ -15,6 +15,10 @@ public class SwipeDetector : MonoBehaviour {
 
   public static event Action<SwipeData> OnSwipe = delegate { };
 
+  private void Awake() {
+    Input.multiTouchEnabled = false;
+  }
+
   public void SkipSwipe() {
     _skipSwipe = true;
   }
@@ -101,7 +105,7 @@ public class SwipeDetector : MonoBehaviour {
       StartPosition = _fingerDownPosition,
       EndPosition = _fingerUpPosition
     };
-    OnSwipe(swipeData);
+    OnSwipe?.Invoke(swipeData);
   }
 }
 
