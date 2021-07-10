@@ -14,7 +14,10 @@ public class SelectSide : MonoBehaviour {
   [SerializeField]
   private Transform _cubeTransform;
 
-  private SideController _side;
+  [SerializeField]
+  private SwipeDetector _swipeDetector;
+
+  private Side _side;
 
   private Coroutine _coroutine;
 
@@ -51,8 +54,9 @@ public class SelectSide : MonoBehaviour {
   }
 
   private void EnableMode(RaycastHit hit) {
-    _side = hit.collider.GetComponent<SideController>();
+    _side = hit.collider.GetComponent<Side>();
     if (_side != null) {
+      _swipeDetector.SkipSwipe();
       _side.SetMergeMode(_movePoint.position);
     }
   }

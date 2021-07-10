@@ -11,7 +11,13 @@ public class SwipeDetector : MonoBehaviour {
   [SerializeField]
   private float _minDistanceForSwipe = 20f;
 
+  private bool _skipSwipe;
+
   public static event Action<SwipeData> OnSwipe = delegate { };
+
+  public void SkipSwipe() {
+    _skipSwipe = true;
+  }
 
   private void Update() {
 #if UNITY_EDITOR
@@ -53,20 +59,24 @@ public class SwipeDetector : MonoBehaviour {
   }
 
   private void DetectSwipe() {
-    if (SwipeDistanceCheckMet()) {
-      if (IsVerticalSwipe()) {
-        SwipeDirection direction =
-          _fingerDownPosition.y - _fingerUpPosition.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
-        SendSwipe(direction);
-      } else {
-        SwipeDirection direction = _fingerDownPosition.x - _fingerUpPosition.x > 0
-          ? SwipeDirection.Right
-          : SwipeDirection.Left;
-        SendSwipe(direction);
-      }
+    if (!_skipSwipe) {
+      if (SwipeDistanceCheckMet()) {
+        if (IsVerticalSwipe()) {
+          SwipeDirection direction =
+            _fingerDownPosition.y - _fingerUpPosition.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+          SendSwipe(direction);
+        } else {
+          SwipeDirection direction = _fingerDownPosition.x - _fingerUpPosition.x > 0
+            ? SwipeDirection.Right
+            : SwipeDirection.Left;
+          SendSwipe(direction);
+        }
 
-      _fingerUpPosition = _fingerDownPosition;
+        _fingerUpPosition = _fingerDownPosition;
+      }
     }
+
+    _skipSwipe = false;
   }
 
   private bool IsVerticalSwipe() {

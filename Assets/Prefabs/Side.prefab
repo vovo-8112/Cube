@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 412347049767027195}
   - component: {fileID: 412347049767027190}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: Side
   m_TagString: Side
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scaleVector3: {x: 0.8, y: 0.8, z: 0.8}
+  _collider: {fileID: 412347050750214347}
 --- !u!1 &412347050750214347
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &412347050750214344
 Transform:
   m_ObjectHideFlags: 0
@@ -137,7 +138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412347050750214347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.14}
+  m_LocalPosition: {x: 0.338, y: 0, z: 0.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 412347049767027194}
@@ -154,8 +155,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3767303, y: 1, z: 0.73187035}
-  m_Center: {x: -0.31163496, y: 0, z: 0.28077087}
+  m_Size: {x: 0.31170297, y: 0.47061738, z: 0.51962537}
+  m_Center: {x: -0.30972478, y: 0.0060445867, z: 0.17464797}
 --- !u!1 &3742479604430386604
 GameObject:
   m_ObjectHideFlags: 0

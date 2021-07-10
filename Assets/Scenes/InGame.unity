@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90611212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectSwipeOnlyAfterRelease: 1
-  _minDistanceForSwipe: 40
+  _minDistanceForSwipe: 50
 --- !u!4 &758019228
 Transform:
   m_ObjectHideFlags: 0
@@ -486,7 +486,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 758019226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.3459344, y: 1.0200925, z: -4.517537}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -570,6 +570,7 @@ MonoBehaviour:
   _movePoint: {fileID: 1878601498}
   _durationTap: 1.5
   _cubeTransform: {fileID: 147134733}
+  _swipeDetector: {fileID: 758019227}
 --- !u!114 &1245799022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -813,6 +814,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2461741543322996297, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
+      propertyPath: m_Name
+      value: Side1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742479604310985788, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
+      propertyPath: m_Name
+      value: Side3
+      objectReference: {fileID: 0}
     - target: {fileID: 3915605178957261353, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
       propertyPath: _testGameObject
       value: 
@@ -861,9 +870,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3915605178957261356, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 3915605178957261358, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
       propertyPath: m_Name
       value: Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 3915605179010202756, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
+      propertyPath: m_Name
+      value: Side
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418526460489250359, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
+      propertyPath: m_Name
+      value: Side5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5600731055910633259, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
+      propertyPath: m_Name
+      value: Side4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219578164961165150, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
+      propertyPath: m_Name
+      value: Side2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}

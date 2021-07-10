@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class SideController : MonoBehaviour {
+public class Side : MonoBehaviour {
   [SerializeField]
   private Vector3 _scaleVector3;
 
+  [SerializeField]
+  private GameObject _collider;
+
   private Vector3 _startPosition;
-  private Quaternion _startRotation;
   private Vector3 _startScale;
 
   private void Awake() {
@@ -19,9 +21,10 @@ public class SideController : MonoBehaviour {
   }
 
   public void ResetSide() {
-    var transform1 = transform;
+    Transform transform1 = transform;
     transform1.position = _startPosition;
     transform1.localScale = _startScale;
+    _collider.gameObject.SetActive(false);
   }
 
   public void SetMergeMode(Vector3 _movePoint) {
@@ -29,5 +32,6 @@ public class SideController : MonoBehaviour {
     transform1.localScale = _scaleVector3;
     transform1.SetParent(gameObject.transform.parent.parent);
     transform1.position = _movePoint;
+    _collider.gameObject.SetActive(true);
   }
 }
