@@ -21,7 +21,7 @@ public class Side : MonoBehaviour {
 
   private Vector3 _startPosition;
   private Vector3 _startScale;
-  private Vector3 _mergeVector = new Vector3(0, 0, -0.50001f);
+  private Side _otherSide;
 
   private Dictionary<int, string> colors = new Dictionary<int, string>() {
     {2, "#eee4da"},
@@ -43,6 +43,7 @@ public class Side : MonoBehaviour {
   }
 
   private void SetText(int val) {
+    SetColor(val);
     _num = val;
     _textMeshPro.text = _num.ToString();
   }
@@ -75,9 +76,26 @@ public class Side : MonoBehaviour {
 
   public void ResetSide() {
     Transform transform1 = transform;
-    transform1.position = _startPosition;
     transform1.localScale = _startScale;
     _collider.enabled = false;
+  }
+
+  public void Merge() {
+    if (CanMerge()) {
+      _otherSide._num *= 2;
+      _otherSide.SetText(_otherSide._num);
+      Destroy(gameObject);
+    } else {
+      ResetSide();
+    }
+  }
+
+  private bool CanMerge() {
+    if (_otherSide == null) {
+      return false;
+    }
+
+    return _num == _otherSide._num;
   }
 
   public void SetMergeMode(Vector3 _movePoint) {
@@ -92,7 +110,7 @@ public class Side : MonoBehaviour {
     RotationCubeController.RotationText -= RotateText;
   }
 
-  // private void OnTriggerEnter(Collider other) {
-  //   other.GetComponent<Side>();
-  // }
+  private void OnTriggerEnter(Collider other) {
+    _otherSide = other.GetComponent<Side>();
+  }
 }

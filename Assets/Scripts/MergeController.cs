@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MergeController : MonoBehaviour {
@@ -17,7 +18,11 @@ public class MergeController : MonoBehaviour {
   [SerializeField]
   private SwipeDetector _swipeDetector;
 
+  [SerializeField]
+  private List<Transform> _spawnPoint;
+
   private Side _side;
+  private Vector3 _nextPosition;
 
   private Coroutine _coroutine;
 
@@ -26,14 +31,16 @@ public class MergeController : MonoBehaviour {
       Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
       RaycastHit hit;
       if (Physics.Raycast(ray, out hit)) {
-        if (hit.collider != null && _coroutine == null) {
+        if (hit.collider != null && _coroutine == null&&_side==null) {
           _coroutine = StartCoroutine(Click(hit));
         }
       }
     }
 
-    if (Input.GetMouseButtonUp(0)) {
-      DisableModeMerge();
+    if (Input.GetMouseButtonDown(0)) {
+      if (_side != null) {
+        DisableModeMerge();
+      }
     }
   }
 
@@ -43,8 +50,11 @@ public class MergeController : MonoBehaviour {
     }
 
     StopCoroutine(_coroutine);
+    FindPoint();
     SetDefaultSide();
+    _side.transform.position = _nextPosition;
     _coroutine = null;
+    _side = null;
   }
 
   private IEnumerator Click(RaycastHit hit) {
@@ -64,7 +74,25 @@ public class MergeController : MonoBehaviour {
   private void SetDefaultSide() {
     if (_side != null) {
       _side.transform.SetParent(_cubeTransform);
-      _side.ResetSide();
+      _side.Merge();
+      // _side.ResetSide();
+      //TODO RESET SIDE : IF CAN`T Merge
     }
+  }
+
+  private void FindPoint() {
+    float distanceToClosestEnemy = Mathf.Infinity;
+    Transform point = null;
+
+    foreach (Transform currentEnemy in _spawnPoint) {
+      float distanceToEnemy = (currentEnemy.transform.position - _side.transform.position).sqrMagnitude;
+      if (distanceToEnemy < distanceToClosestEnemy) {
+        distanceToClosestEnemy = distanceToEnemy;
+        point = currentEnemy;
+        _nextPosition = point.position;
+      }
+    }
+
+    if (point is { }) Debug.DrawLine(transform.position, point.transform.position);
   }
 }
