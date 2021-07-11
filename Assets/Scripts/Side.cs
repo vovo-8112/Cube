@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using Random = System.Random;
 
 public class Side : MonoBehaviour {
   [SerializeField]
@@ -23,6 +21,8 @@ public class Side : MonoBehaviour {
   private Vector3 _startScale;
   private Side _otherSide;
 
+  public StateSide State;
+
   private Dictionary<int, string> colors = new Dictionary<int, string>() {
     {2, "#eee4da"},
     {4, "#ede0c8"},
@@ -36,6 +36,11 @@ public class Side : MonoBehaviour {
     {1024, "#eec62c"},
     {2048, "#eec308"}
   };
+
+  public enum StateSide {
+    Default,
+    Merge
+  }
 
   private void Awake() {
     SetText(2);
@@ -99,8 +104,10 @@ public class Side : MonoBehaviour {
   }
 
   public void SetMergeMode(Vector3 _movePoint) {
+    State = StateSide.Merge;
     Transform transform1 = transform;
     transform1.localScale = _scaleVector3;
+    transform1.Rotate(Vector3.zero);
     transform1.SetParent(gameObject.transform.parent.parent);
     transform1.position = _movePoint;
     _collider.enabled = true;
