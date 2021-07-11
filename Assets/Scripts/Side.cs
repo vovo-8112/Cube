@@ -15,13 +15,14 @@ public class Side : MonoBehaviour {
   [SerializeField]
   private MeshRenderer _meshRenderer;
 
-  private int _num;
+  [SerializeField]
+  private Transform _spawnPoint;
 
-  private Vector3 _startPosition;
+  private int _num;
   private Vector3 _startScale;
   private Side _otherSide;
 
-  public StateSide State;
+  public StateSide _state;
 
   private Dictionary<int, string> colors = new Dictionary<int, string>() {
     {2, "#eee4da"},
@@ -69,29 +70,42 @@ public class Side : MonoBehaviour {
     _meshRenderer.material.color = col;
   }
 
+  private void Respawn() {
+    gameObject.SetActive(false);
+    SetText(2);
+    transform.position = _spawnPoint.position;
+    transform.rotation = _spawnPoint.rotation;
+    transform.localScale = Vector3.one;
+    Invoke(nameof(ShowGameObjectAfterRespawn), 0.01f);
+  }
+
+  private void ShowGameObjectAfterRespawn() {
+    gameObject.SetActive(true);
+  }
+
   private void RotateText() {
     _textMeshPro.transform.LookAt(Vector3.zero);
   }
 
   private void GetStartVector() {
     Transform transform1 = transform;
-    _startPosition = transform1.position;
     _startScale = transform1.localScale;
   }
 
-  public void ResetSide() {
+  private void MergeDenied() {
     Transform transform1 = transform;
     transform1.localScale = _startScale;
     _collider.enabled = false;
+    _state = StateSide.Default;
   }
 
   public void Merge() {
     if (CanMerge()) {
       _otherSide._num *= 2;
       _otherSide.SetText(_otherSide._num);
-      Destroy(gameObject);
+      Respawn();
     } else {
-      ResetSide();
+      MergeDenied();
     }
   }
 
@@ -104,7 +118,7 @@ public class Side : MonoBehaviour {
   }
 
   public void SetMergeMode(Vector3 _movePoint) {
-    State = StateSide.Merge;
+    _state = StateSide.Merge;
     Transform transform1 = transform;
     transform1.localScale = _scaleVector3;
     transform1.Rotate(Vector3.zero);

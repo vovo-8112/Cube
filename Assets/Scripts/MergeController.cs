@@ -31,15 +31,15 @@ public class MergeController : MonoBehaviour {
     RaycastHit hit;
     if (Input.GetMouseButtonDown(0)) {
       if (Physics.Raycast(ray, out hit)) {
-        if (hit.collider != null && _coroutine == null && _side==null) {
+        if (hit.collider != null && _coroutine == null && _side == null) {
           _coroutine = StartCoroutine(Click(hit));
         }
       }
     }
 
     if (Input.GetMouseButtonDown(0)) {
-      if (Physics.Raycast(ray, out hit)) {
-        if (_side != null) {
+      if (_side != null) {
+        if (Physics.Raycast(ray, out hit)) {
           DisableModeMerge();
         }
       }
@@ -50,11 +50,11 @@ public class MergeController : MonoBehaviour {
     if (_coroutine == null) {
       return;
     }
-    if (_side!=null&&_side.State == Side.StateSide.Merge) {
+
+    if (_side != null && _side._state == Side.StateSide.Merge) {
       StopCoroutine(_coroutine);
       FindPoint();
       SetDefaultSide();
-      _side.transform.position = _nextPosition;
       _coroutine = null;
       _side = null;
     }
@@ -75,10 +75,11 @@ public class MergeController : MonoBehaviour {
   }
 
   private void SetDefaultSide() {
-      _side.transform.SetParent(_cubeTransform);
-      _side.Merge();
-      // _side.ResetSide();
-      //TODO RESET SIDE : IF CAN`T Merge
+    _side.transform.SetParent(_cubeTransform);
+    _side.transform.position = _nextPosition;
+    _side.Merge();
+    // _side.ResetSide();
+    //TODO RESET SIDE : IF CAN`T Merge
   }
 
   private void FindPoint() {
