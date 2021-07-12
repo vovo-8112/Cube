@@ -12,7 +12,7 @@ public class RotationCubeController : MonoBehaviour {
   [SerializeField]
   private GameObject _testGameObject;
 
-  public Sequence _sequence;
+  private Sequence _sequence;
   private Quaternion _oldRotation;
   public static event Action RotationText;
 
