@@ -12,8 +12,18 @@ public class RotationCubeController : MonoBehaviour {
   [SerializeField]
   private GameObject _testGameObject;
 
-  private Sequence _sequence;
+  public Sequence _sequence;
+  private Quaternion _oldRotation;
   public static event Action RotationText;
+
+  public void SaveRotation() {
+    _oldRotation = _testGameObject.transform.rotation;
+  }
+
+  public void ResetRotation() {
+    _testGameObject.transform.rotation = _oldRotation;
+    AnimRotationCube(_testGameObject.transform.rotation);
+  }
 
   private void Awake() {
     SwipeDetector.OnSwipe += SwipeDetector_OnSwipe;

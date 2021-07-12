@@ -13,7 +13,7 @@ public class MergeController : MonoBehaviour {
   private float _durationTap;
 
   [SerializeField]
-  private Transform _cubeTransform;
+  private RotationCubeController _cube;
 
   [SerializeField]
   private SwipeDetector _swipeDetector;
@@ -37,21 +37,30 @@ public class MergeController : MonoBehaviour {
       }
     }
 
+    if (Input.GetMouseButtonUp(0)) {
+      if (_side == null&&_coroutine!=null) {
+        StopCoroutine(_coroutine);
+        _coroutine = null;
+      }
+    }
+
     if (Input.GetMouseButtonDown(0)) {
       if (_side != null) {
         if (Physics.Raycast(ray, out hit)) {
-          DisableModeMerge();
+          TryMerge(hit);
         }
       }
     }
   }
 
-  private void DisableModeMerge() {
+  private void TryMerge(RaycastHit hit) {
     if (_coroutine == null) {
       return;
     }
 
     if (_side != null && _side._state == Side.StateSide.Merge) {
+      _side = hit.collider.GetComponent<Side>();
+
       StopCoroutine(_coroutine);
       FindPoint();
       SetDefaultSide();
@@ -69,17 +78,21 @@ public class MergeController : MonoBehaviour {
   private void EnableMode(RaycastHit hit) {
     _side = hit.collider.GetComponent<Side>();
     if (_side != null) {
+      _cube.SaveRotation();
       _swipeDetector.SkipSwipe();
       _side.SetMergeMode(_movePoint.position);
     }
   }
 
   private void SetDefaultSide() {
-    _side.transform.SetParent(_cubeTransform);
-    _side.transform.position = _nextPosition;
-    _side.Merge();
-    // _side.ResetSide();
-    //TODO RESET SIDE : IF CAN`T Merge
+    _side.transform.SetParent(_cube.transform);
+    if (_side.CanMerge()) {
+      _side.Merge();
+    } else {
+      _side.MergeDenied();
+      _cube.ResetRotation();
+      //TODO RESET SIDE : IF CAN`T Merge
+    }
   }
 
   private void FindPoint() {

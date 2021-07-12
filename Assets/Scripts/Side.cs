@@ -19,7 +19,6 @@ public class Side : MonoBehaviour {
   private Transform _spawnPoint;
 
   private int _num;
-  private Vector3 _startScale;
   private Side _otherSide;
 
   public StateSide _state;
@@ -56,7 +55,6 @@ public class Side : MonoBehaviour {
 
   private void Start() {
     SetColor(_num);
-    GetStartVector();
   }
 
   private void SetColor(int val) {
@@ -73,10 +71,15 @@ public class Side : MonoBehaviour {
   private void Respawn() {
     gameObject.SetActive(false);
     SetText(2);
+    SetStartPosition();
+    _collider.enabled = false;
+    Invoke(nameof(ShowGameObjectAfterRespawn), 0.01f);
+  }
+
+  private void SetStartPosition() {
     transform.position = _spawnPoint.position;
     transform.rotation = _spawnPoint.rotation;
     transform.localScale = Vector3.one;
-    Invoke(nameof(ShowGameObjectAfterRespawn), 0.01f);
   }
 
   private void ShowGameObjectAfterRespawn() {
@@ -87,14 +90,8 @@ public class Side : MonoBehaviour {
     _textMeshPro.transform.LookAt(Vector3.zero);
   }
 
-  private void GetStartVector() {
-    Transform transform1 = transform;
-    _startScale = transform1.localScale;
-  }
-
-  private void MergeDenied() {
-    Transform transform1 = transform;
-    transform1.localScale = _startScale;
+  public void MergeDenied() {
+    SetStartPosition();
     _collider.enabled = false;
     _state = StateSide.Default;
   }
@@ -104,12 +101,10 @@ public class Side : MonoBehaviour {
       _otherSide._num *= 2;
       _otherSide.SetText(_otherSide._num);
       Respawn();
-    } else {
-      MergeDenied();
     }
   }
 
-  private bool CanMerge() {
+  public bool CanMerge() {
     if (_otherSide == null) {
       return false;
     }
@@ -133,5 +128,6 @@ public class Side : MonoBehaviour {
 
   private void OnTriggerEnter(Collider other) {
     _otherSide = other.GetComponent<Side>();
+    Debug.Log(_otherSide.name + _otherSide._num);
   }
 }
