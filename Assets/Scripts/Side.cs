@@ -18,7 +18,7 @@ public class Side : MonoBehaviour {
   [SerializeField]
   private Transform _spawnPoint;
 
-  private int _num;
+  public int _num;
   private Side _otherSide;
 
   public StateSide _state;
@@ -68,9 +68,9 @@ public class Side : MonoBehaviour {
     _meshRenderer.material.color = col;
   }
 
-  private void Respawn() {
+  private void Respawn(int value) {
     gameObject.SetActive(false);
-    SetText(2);
+    SetText(value);
     SetStartPosition();
     _collider.enabled = false;
     Invoke(nameof(ShowGameObjectAfterRespawn), 0.01f);
@@ -96,11 +96,11 @@ public class Side : MonoBehaviour {
     _state = StateSide.Default;
   }
 
-  public void Merge() {
+  public void Merge(int value) {
     if (CanMerge()) {
       _otherSide._num *= 2;
       _otherSide.SetText(_otherSide._num);
-      Respawn();
+      Respawn(value);
     }
   }
 

@@ -21,6 +21,9 @@ public class MergeController : MonoBehaviour {
   [SerializeField]
   private List<Transform> _spawnPoint;
 
+  [SerializeField]
+  private SideSet _sideSet;
+
   private Side _side;
   private Vector3 _nextPosition;
 
@@ -38,7 +41,7 @@ public class MergeController : MonoBehaviour {
     }
 
     if (Input.GetMouseButtonUp(0)) {
-      if (_side == null&&_coroutine!=null) {
+      if (_side == null && _coroutine != null) {
         StopCoroutine(_coroutine);
         _coroutine = null;
       }
@@ -87,7 +90,7 @@ public class MergeController : MonoBehaviour {
   private void SetDefaultSide() {
     _side.transform.SetParent(_cube.transform);
     if (_side.CanMerge()) {
-      _side.Merge();
+      _side.Merge(_sideSet.GetRandomNum());
     } else {
       _side.MergeDenied();
       _cube.ResetRotation();
