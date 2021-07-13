@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MergeController : MonoBehaviour {
@@ -19,63 +17,39 @@ public class MergeController : MonoBehaviour {
   private SwipeDetector _swipeDetector;
 
   [SerializeField]
-  private List<Transform> _spawnPoint;
-
-  [SerializeField]
   private SideSet _sideSet;
 
+  private RaycastHit _raycastHit;
   private Side _side;
-  private Vector3 _nextPosition;
-
-  private Coroutine _coroutine;
 
   private void LateUpdate() {
     Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-    RaycastHit hit;
-    if (Input.GetMouseButtonDown(0)) {
-      if (Physics.Raycast(ray, out hit)) {
-        if (hit.collider != null && _coroutine == null && _side == null) {
-          _coroutine = StartCoroutine(Click(hit));
-        }
-      }
-    }
+    if (Input.GetMouseButtonDown(0))
+      if (Physics.Raycast(ray, out _raycastHit))
+        if (_raycastHit.collider != null && _side == null)
+          Invoke(nameof(Click), _durationTap);
 
-    if (Input.GetMouseButtonUp(0)) {
-      if (_side == null && _coroutine != null) {
-        StopCoroutine(_coroutine);
-        _coroutine = null;
-      }
-    }
+    if (Input.GetMouseButtonUp(0))
+      if (_side == null)
+        CancelInvoke(nameof(Click));
 
-    if (Input.GetMouseButtonDown(0)) {
-      if (_side != null) {
-        if (Physics.Raycast(ray, out hit)) {
-          TryMerge(hit);
-        }
-      }
-    }
+    if (Input.GetMouseButtonDown(0))
+      if (_side != null)
+        if (Physics.Raycast(ray, out _raycastHit))
+          TryMerge(_raycastHit);
   }
 
   private void TryMerge(RaycastHit hit) {
-    if (_coroutine == null) {
-      return;
-    }
-
     if (_side != null && _side._state == Side.StateSide.Merge) {
       _side = hit.collider.GetComponent<Side>();
 
-      StopCoroutine(_coroutine);
-      FindPoint();
       SetDefaultSide();
-      _coroutine = null;
       _side = null;
     }
   }
 
-  private IEnumerator Click(RaycastHit hit) {
-    yield return new WaitForSeconds(_durationTap);
-    EnableMode(hit);
-    yield return null;
+  private void Click() {
+    EnableMode(_raycastHit);
   }
 
   private void EnableMode(RaycastHit hit) {
@@ -89,28 +63,12 @@ public class MergeController : MonoBehaviour {
 
   private void SetDefaultSide() {
     _side.transform.SetParent(_cube.transform);
-    if (_side.CanMerge()) {
+    if (_side.CanMerge())
       _side.Merge(_sideSet.GetRandomNum());
-    } else {
+    else {
       _side.MergeDenied();
       _cube.ResetRotation();
       //TODO RESET SIDE : IF CAN`T Merge
     }
-  }
-
-  private void FindPoint() {
-    float distanceToClosestEnemy = Mathf.Infinity;
-    Transform point = null;
-
-    foreach (Transform currentEnemy in _spawnPoint) {
-      float distanceToEnemy = (currentEnemy.transform.position - _side.transform.position).sqrMagnitude;
-      if (distanceToEnemy < distanceToClosestEnemy) {
-        distanceToClosestEnemy = distanceToEnemy;
-        point = currentEnemy;
-        _nextPosition = point.position;
-      }
-    }
-
-    if (point is { }) Debug.DrawLine(transform.position, point.transform.position);
   }
 }

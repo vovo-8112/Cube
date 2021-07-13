@@ -753,7 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 1245799023}
   _movePoint: {fileID: 1878601498}
-  _durationTap: 1
+  _durationTap: 0.7
   _cube: {fileID: 147134734}
   _swipeDetector: {fileID: 758019227}
   _spawnPoint:
