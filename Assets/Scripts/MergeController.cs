@@ -24,19 +24,30 @@ public class MergeController : MonoBehaviour {
 
   private void LateUpdate() {
     Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-    if (Input.GetMouseButtonDown(0))
-      if (Physics.Raycast(ray, out _raycastHit))
-        if (_raycastHit.collider != null && _side == null)
+    if (Input.GetMouseButtonDown(0)) {
+      if (Physics.Raycast(ray, out _raycastHit)) {
+        if (_raycastHit.collider != null && _side == null) {
           Invoke(nameof(Click), _durationTap);
+          _raycastHit.collider.GetComponent<Side>().TakeAnimation();
+        }
+      }
+    }
 
-    if (Input.GetMouseButtonUp(0))
-      if (_side == null)
-        CancelInvoke(nameof(Click));
+    if (Input.GetMouseButtonUp(0)) {
+      if (_side == null) {
+        if (_raycastHit.collider != null) {
+          _raycastHit.collider.GetComponent<Side>().TakeAnimationStop();
+          CancelInvoke(nameof(Click));
+        }
+      }
+    }
 
-    if (Input.GetMouseButtonDown(0))
-      if (_side != null)
-        if (Physics.Raycast(ray, out _raycastHit))
-          TryMerge(_raycastHit);
+    if (Input.GetMouseButtonDown(0)) {
+      if (_side == null) return;
+      if (Physics.Raycast(ray, out _raycastHit)) {
+        TryMerge(_raycastHit);
+      }
+    }
   }
 
   private void TryMerge(RaycastHit hit) {

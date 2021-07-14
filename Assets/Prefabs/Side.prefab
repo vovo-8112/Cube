@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 412347049767027192}
   - component: {fileID: 412347049767027195}
   - component: {fileID: 412347049767027190}
+  - component: {fileID: 6716505392787626007}
   - component: {fileID: 6041348356001216567}
   - component: {fileID: 4639913075711932002}
   m_Layer: 0
@@ -116,6 +117,29 @@ MonoBehaviour:
   _collider: {fileID: 6041348356001216567}
   _textMeshPro: {fileID: 3742479604430386606}
   _meshRenderer: {fileID: 412347049767027192}
+  _spawnPoint: {fileID: 0}
+  _takeAnimation: {fileID: 6716505392787626007}
+  _num: 0
+  _state: 0
+--- !u!114 &6716505392787626007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412347049767027197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b110bbe37d2524bb8c96101f25d477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _listScale:
+  - {x: 0.96, y: 0.96, z: 0.96}
+  - {x: 1, y: 1, z: 1}
+  - {x: 1.03, y: 1.03, z: 1.03}
+  - {x: 0.98, y: 0.98, z: 0.98}
+  - {x: 0.84, y: 0.84, z: 0.84}
+  _duration: 0.66
 --- !u!65 &6041348356001216567
 BoxCollider:
   m_ObjectHideFlags: 0
