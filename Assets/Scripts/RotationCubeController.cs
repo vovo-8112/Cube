@@ -60,7 +60,6 @@ public class RotationCubeController : MonoBehaviour {
         break;
     }
 
-    RotationText?.Invoke();
     AnimRotationCube(_testGameObject.transform.rotation);
   }
 
@@ -72,11 +71,17 @@ public class RotationCubeController : MonoBehaviour {
     _sequence = DOTween.Sequence();
 
     _sequence.Append(transform.DORotateQuaternion(quaternion, _duration).SetAutoKill(true));
+    _sequence.OnUpdate(LookAtForTextInvoke);
+  }
+
+  private void LookAtForTextInvoke() {
+    RotationText?.Invoke();
   }
 
   private void StopAnim() {
     _sequence.Kill();
     _sequence.Append(transform.DORotateQuaternion(_testGameObject.transform.rotation, _duration));
+    _sequence.OnUpdate(LookAtForTextInvoke);
   }
 
   private void OnDestroy() {
