@@ -139,7 +139,7 @@ MonoBehaviour:
   - {x: 1.03, y: 1.03, z: 1.03}
   - {x: 0.98, y: 0.98, z: 0.98}
   - {x: 0.75, y: 0.75, z: 0.75}
-  _duration: 0.66
+  _duration: 0.6
 --- !u!65 &6041348356001216567
 BoxCollider:
   m_ObjectHideFlags: 0

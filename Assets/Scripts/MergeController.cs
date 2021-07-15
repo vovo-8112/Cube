@@ -45,15 +45,13 @@ public class MergeController : MonoBehaviour {
     if (Input.GetMouseButtonDown(0)) {
       if (_side == null) return;
       if (Physics.Raycast(ray, out _raycastHit)) {
-        TryMerge(_raycastHit);
+        TryMerge();
       }
     }
   }
 
-  private void TryMerge(RaycastHit hit) {
-    if (_side != null && _side._state == Side.StateSide.Merge) {
-      _side = hit.collider.GetComponent<Side>();
-
+  private void TryMerge() {
+    if (_side._state == Side.StateSide.Merge) {
       SetDefaultSide();
       _side = null;
     }
