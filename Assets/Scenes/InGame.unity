@@ -717,6 +717,7 @@ GameObject:
   - component: {fileID: 1245799023}
   - component: {fileID: 1245799022}
   - component: {fileID: 1245799021}
+  - component: {fileID: 1245799026}
   - component: {fileID: 1245799025}
   m_Layer: 0
   m_Name: Camera
@@ -815,7 +816,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 10.497263, y: -62.983574, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!111 &1245799025
 Animation:
   m_ObjectHideFlags: 0
@@ -832,6 +833,20 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1245799026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245799020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca20beef3a556d14887870fb4da83f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _swipeDetector: {fileID: 758019227}
+  _mergeController: {fileID: 1245799021}
 --- !u!114 &1472327066 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3645170010804225758, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
