@@ -17,8 +17,10 @@ public class Side : MonoBehaviour {
 
   [SerializeField]
   private Transform _spawnPoint;
+  [SerializeField]
+  private TakeAnimation _takeAnimation;
 
-  private int _num;
+  public int _num;
   private Side _otherSide;
 
   public StateSide _state;
@@ -40,6 +42,45 @@ public class Side : MonoBehaviour {
   public enum StateSide {
     Default,
     Merge
+  }
+
+  public void TakeAnimation() {
+    _takeAnimation.AnimationRotation();
+  }
+
+  public void TakeAnimationStop() {
+    _takeAnimation.StopAnimation();
+  }
+
+  public void MergeDenied() {
+    SetStartPosition();
+    _collider.enabled = false;
+    _state = StateSide.Default;
+  }
+
+  public void Merge(int value) {
+    if (CanMerge()) {
+      _otherSide._num *= 2;
+      _otherSide.SetText(_otherSide._num);
+      Respawn(value);
+    }
+  }
+
+  public bool CanMerge() {
+    if (_otherSide == null) {
+      return false;
+    }
+
+    return _num == _otherSide._num;
+  }
+
+  public void SetMergeMode(Vector3 _movePoint) {
+    _state = StateSide.Merge;
+    Transform transform1 = transform;
+    transform1.Rotate(Vector3.zero);
+    transform1.SetParent(gameObject.transform.parent.parent);
+    transform1.position = _movePoint;
+    _collider.enabled = true;
   }
 
   private void Awake() {
@@ -68,9 +109,9 @@ public class Side : MonoBehaviour {
     _meshRenderer.material.color = col;
   }
 
-  private void Respawn() {
+  private void Respawn(int value) {
     gameObject.SetActive(false);
-    SetText(2);
+    SetText(value);
     SetStartPosition();
     _collider.enabled = false;
     Invoke(nameof(ShowGameObjectAfterRespawn), 0.01f);
@@ -88,38 +129,6 @@ public class Side : MonoBehaviour {
 
   private void RotateText() {
     _textMeshPro.transform.LookAt(Vector3.zero);
-  }
-
-  public void MergeDenied() {
-    SetStartPosition();
-    _collider.enabled = false;
-    _state = StateSide.Default;
-  }
-
-  public void Merge() {
-    if (CanMerge()) {
-      _otherSide._num *= 2;
-      _otherSide.SetText(_otherSide._num);
-      Respawn();
-    }
-  }
-
-  public bool CanMerge() {
-    if (_otherSide == null) {
-      return false;
-    }
-
-    return _num == _otherSide._num;
-  }
-
-  public void SetMergeMode(Vector3 _movePoint) {
-    _state = StateSide.Merge;
-    Transform transform1 = transform;
-    transform1.localScale = _scaleVector3;
-    transform1.Rotate(Vector3.zero);
-    transform1.SetParent(gameObject.transform.parent.parent);
-    transform1.position = _movePoint;
-    _collider.enabled = true;
   }
 
   private void OnDestroy() {
