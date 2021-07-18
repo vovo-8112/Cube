@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Side : MonoBehaviour {
   [SerializeField]
-  private Vector3 _scaleVector3;
-
-  [SerializeField]
   private Collider _collider;
 
   [SerializeField]
@@ -20,10 +17,10 @@ public class Side : MonoBehaviour {
   [SerializeField]
   private TakeAnimation _takeAnimation;
 
-  public int _num;
   private Side _otherSide;
+  public int num { get; private set; }
 
-  public StateSide _state;
+  public StateSide state { get; private set; }
 
   private Dictionary<int, string> colors = new Dictionary<int, string>() {
     {2, "#eee4da"},
@@ -55,13 +52,13 @@ public class Side : MonoBehaviour {
   public void MergeDenied() {
     SetStartPosition();
     _collider.enabled = false;
-    _state = StateSide.Default;
+    state = StateSide.Default;
   }
 
   public void Merge(int value) {
     if (CanMerge()) {
-      _otherSide._num *= 2;
-      _otherSide.SetText(_otherSide._num);
+      _otherSide.num *= 2;
+      _otherSide.SetText(_otherSide.num);
       Respawn(value);
     }
   }
@@ -71,11 +68,11 @@ public class Side : MonoBehaviour {
       return false;
     }
 
-    return _num == _otherSide._num;
+    return num == _otherSide.num;
   }
 
   public void SetMergeMode(Vector3 _movePoint) {
-    _state = StateSide.Merge;
+    state = StateSide.Merge;
     Transform transform1 = transform;
     transform1.Rotate(Vector3.zero);
     transform1.SetParent(gameObject.transform.parent.parent);
@@ -90,12 +87,12 @@ public class Side : MonoBehaviour {
 
   private void SetText(int val) {
     SetColor(val);
-    _num = val;
-    _textMeshPro.text = _num.ToString();
+    num = val;
+    _textMeshPro.text = num.ToString();
   }
 
   private void Start() {
-    SetColor(_num);
+    SetColor(num);
   }
 
   private void SetColor(int val) {
@@ -137,6 +134,6 @@ public class Side : MonoBehaviour {
 
   private void OnTriggerEnter(Collider other) {
     _otherSide = other.GetComponent<Side>();
-    Debug.Log(_otherSide.name + _otherSide._num);
+    Debug.Log(_otherSide.name + _otherSide.num);
   }
 }

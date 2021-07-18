@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class MergeController : MonoBehaviour {
   [SerializeField]
@@ -16,8 +18,8 @@ public class MergeController : MonoBehaviour {
   [SerializeField]
   private SwipeDetector _swipeDetector;
 
-  [SerializeField]
-  private SideSet _sideSet;
+  [FormerlySerializedAs("_sideSet"),SerializeField]
+  private SideController _sideController;
 
   private RaycastHit _raycastHit;
   private Side _side;
@@ -51,7 +53,7 @@ public class MergeController : MonoBehaviour {
   }
 
   private void TryMerge() {
-    if (_side._state == Side.StateSide.Merge) {
+    if (_side.state == Side.StateSide.Merge) {
       SetDefaultSide();
       _side = null;
     }
@@ -73,11 +75,20 @@ public class MergeController : MonoBehaviour {
   private void SetDefaultSide() {
     _side.transform.SetParent(_cube.transform);
     if (_side.CanMerge())
-      _side.Merge(_sideSet.GetRandomNum());
+      _side.Merge(_sideController.GetRandomNum());
     else {
       _side.MergeDenied();
       _cube.ResetRotation();
       //TODO RESET SIDE : IF CAN`T Merge
+    }
+
+
+    GameOver();
+  }
+
+  private void GameOver() {
+    if (_sideController.IsGameOver()) {
+      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
   }
 }
