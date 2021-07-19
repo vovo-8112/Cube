@@ -18,7 +18,7 @@ public class MergeController : MonoBehaviour {
   [SerializeField]
   private SwipeDetector _swipeDetector;
 
-  [FormerlySerializedAs("_sideSet"),SerializeField]
+  [FormerlySerializedAs("_sideSet"), SerializeField]
   private SideController _sideController;
 
   private RaycastHit _raycastHit;
@@ -40,14 +40,16 @@ public class MergeController : MonoBehaviour {
         if (_raycastHit.collider != null) {
           _raycastHit.collider.GetComponent<Side>().TakeAnimationStop();
           CancelInvoke(nameof(Click));
+          _swipeDetector.MergeMode(false);
         }
       }
     }
 
-    if (Input.GetMouseButtonDown(0)) {
+    if (Input.GetMouseButtonUp(0)) {
       if (_side == null) return;
-      if (Physics.Raycast(ray, out _raycastHit)) {
+      {
         TryMerge();
+        _swipeDetector.MergeMode(false);
       }
     }
   }
@@ -61,6 +63,7 @@ public class MergeController : MonoBehaviour {
 
   private void Click() {
     EnableMode(_raycastHit);
+    _swipeDetector.MergeMode(true);
   }
 
   private void EnableMode(RaycastHit hit) {
@@ -81,7 +84,6 @@ public class MergeController : MonoBehaviour {
       _cube.ResetRotation();
       //TODO RESET SIDE : IF CAN`T Merge
     }
-
 
     GameOver();
   }
