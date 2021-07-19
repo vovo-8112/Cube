@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -134,5 +135,9 @@ public class Side : MonoBehaviour {
 
   private void OnTriggerEnter(Collider other) {
     _otherSide = other.GetComponent<Side>();
+  }
+
+  private void OnTriggerExit(Collider other) {
+    _otherSide = null;
   }
 }

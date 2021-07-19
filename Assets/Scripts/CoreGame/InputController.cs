@@ -15,7 +15,7 @@ public class InputController : MonoBehaviour {
 
   public void EnableInput() {
     SetEnable(true);
-    _timer.StartTime();
+    _timer.RestartTimer();
   }
 
   private void SetEnable(bool enable) {
