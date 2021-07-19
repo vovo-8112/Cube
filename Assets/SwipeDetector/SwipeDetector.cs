@@ -2,16 +2,20 @@
 using UnityEngine;
 
 public class SwipeDetector : MonoBehaviour {
-  private Vector2 _fingerDownPosition;
-  private Vector2 _fingerUpPosition;
-
+  [SerializeField]
+  private Camera _mainCamera;
   [SerializeField]
   private bool _detectSwipeOnlyAfterRelease;
 
   [SerializeField]
-  private float _minDistanceForSwipe = 20f;
+  private float _minDistanceForSwipe;
+
+  [SerializeField]
+  private float _cooldownSwipe;
 
   private bool _skipSwipe;
+  private Vector2 _fingerDownPosition;
+  private Vector2 _fingerUpPosition;
 
   public static event Action<SwipeData> OnSwipe = delegate { };
 
@@ -25,6 +29,11 @@ public class SwipeDetector : MonoBehaviour {
 
   private void Awake() {
     Input.multiTouchEnabled = false;
+    _minDistanceForSwipe = SetMinDistanceForSwipe();
+  }
+
+  private float SetMinDistanceForSwipe() {
+    return _minDistanceForSwipe = (float) _mainCamera.pixelWidth / 8;
   }
 
   private void Update() {
@@ -67,23 +76,35 @@ public class SwipeDetector : MonoBehaviour {
   }
 
   private void DetectSwipe() {
-    if (!_skipSwipe) {
-      if (SwipeDistanceCheckMet()) {
-        if (IsVerticalSwipe()) {
-          SwipeDirection direction =
-            _fingerDownPosition.y - _fingerUpPosition.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
-          SendSwipe(direction);
-        } else {
-          SwipeDirection direction = _fingerDownPosition.x - _fingerUpPosition.x > 0
-            ? SwipeDirection.Right
-            : SwipeDirection.Left;
-          SendSwipe(direction);
-        }
-
-        _fingerUpPosition = _fingerDownPosition;
-      }
+    if (_skipSwipe) {
+      return;
     }
 
+    if (SwipeDistanceCheckMet()) {
+      if (IsVerticalSwipe()) {
+        SwipeDirection direction =
+          _fingerDownPosition.y - _fingerUpPosition.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+        SendSwipe(direction);
+      } else {
+        SwipeDirection direction = _fingerDownPosition.x - _fingerUpPosition.x > 0
+          ? SwipeDirection.Right
+          : SwipeDirection.Left;
+        SendSwipe(direction);
+      }
+
+      _fingerUpPosition = _fingerDownPosition;
+    }
+
+    if (_detectSwipeOnlyAfterRelease) {
+      _skipSwipe = false;
+    } else {
+      SkipSwipe();
+
+      Invoke(nameof(EnableSwipe), _cooldownSwipe);
+    }
+  }
+
+  private void EnableSwipe() {
     _skipSwipe = false;
   }
 

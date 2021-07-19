@@ -63,14 +63,13 @@ public class MergeController : MonoBehaviour {
 
   private void Click() {
     EnableMode(_raycastHit);
-    _swipeDetector.MergeMode(true);
   }
 
   private void EnableMode(RaycastHit hit) {
     _side = hit.collider.GetComponent<Side>();
     if (_side != null) {
       _cube.SaveRotation();
-      _swipeDetector.SkipSwipe();
+      _swipeDetector.MergeMode(true);
       _side.SetMergeMode(_movePoint.position);
     }
   }
@@ -82,7 +81,6 @@ public class MergeController : MonoBehaviour {
     else {
       _side.MergeDenied();
       _cube.ResetRotation();
-      //TODO RESET SIDE : IF CAN`T Merge
     }
 
     GameOver();

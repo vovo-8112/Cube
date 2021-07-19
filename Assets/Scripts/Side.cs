@@ -134,6 +134,5 @@ public class Side : MonoBehaviour {
 
   private void OnTriggerEnter(Collider other) {
     _otherSide = other.GetComponent<Side>();
-    Debug.Log(_otherSide.name + _otherSide.num);
   }
 }
