@@ -806,8 +806,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 1245799023}
   _detectSwipeOnlyAfterRelease: 1
-  _minDistanceForSwipe: 25
-  _cooldownSwipe: 0.7
+  _minDistanceForSwipe: 100
+  _cooldownSwipe: 0.5
 --- !u!4 &758019228
 Transform:
   m_ObjectHideFlags: 0
@@ -1824,7 +1824,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3976341723680874688, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
       propertyPath: _duration
-      value: 0.7
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3976341723680874688, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
       propertyPath: _testGameObject
