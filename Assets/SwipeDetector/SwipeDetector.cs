@@ -1,4 +1,5 @@
 ﻿using System;
+using MoreMountains.NiceVibrations;
 using UnityEngine;
 
 public class SwipeDetector : MonoBehaviour {
@@ -93,6 +94,8 @@ public class SwipeDetector : MonoBehaviour {
       }
 
       _fingerUpPosition = _fingerDownPosition;
+      MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+
     }
 
     if (_detectSwipeOnlyAfterRelease) {
