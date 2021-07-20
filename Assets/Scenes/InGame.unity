@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -533,6 +533,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 442719951}
     m_Modifications:
+    - target: {fileID: 687864355, guid: c7ace0574a9ae194088bca03fa755ba1, type: 3}
+      propertyPath: _timer
+      value: 
+      objectReference: {fileID: 442719953}
     - target: {fileID: 7835440558336375684, guid: c7ace0574a9ae194088bca03fa755ba1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -802,8 +806,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 1245799023}
   _detectSwipeOnlyAfterRelease: 1
-  _minDistanceForSwipe: 50
-  _cooldownSwipe: 0.35
+  _minDistanceForSwipe: 25
+  _cooldownSwipe: 0.7
 --- !u!4 &758019228
 Transform:
   m_ObjectHideFlags: 0
@@ -1818,6 +1822,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3976341723680874688, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
+      propertyPath: _duration
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 3976341723680874688, guid: 4fbe15d93afc0da4a903ff7aac214c67, type: 3}
       propertyPath: _testGameObject
       value: 

@@ -29,12 +29,12 @@ public class SwipeDetector : MonoBehaviour {
 
   private void Awake() {
     Input.multiTouchEnabled = false;
-    _minDistanceForSwipe = SetMinDistanceForSwipe();
+  /*  _minDistanceForSwipe = SetMinDistanceForSwipe();*/
   }
 
-  private float SetMinDistanceForSwipe() {
+  /*private float SetMinDistanceForSwipe() {
     return _minDistanceForSwipe = (float) _mainCamera.pixelWidth / 8;
-  }
+  }*/
 
   private void Update() {
 #if UNITY_EDITOR
