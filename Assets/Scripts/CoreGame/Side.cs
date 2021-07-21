@@ -24,17 +24,20 @@ public class Side : MonoBehaviour {
   public StateSide state { get; private set; }
 
   private Dictionary<int, string> colors = new Dictionary<int, string>() {
-    {2, "#eee4da"},
-    {4, "#ede0c8"},
-    {8, "#f2b179"},
-    {16, "#f59563"},
-    {32, "#f67c5f"},
-    {64, "#f95c30"},
-    {128, "#edce68"},
-    {256, "#eecd57"},
-    {512, "#eec943"},
-    {1024, "#eec62c"},
-    {2048, "#eec308"}
+    {2, "#ffbdb3"},
+    {4, "#fe948d"},
+    {8, "#fe7968"},
+    {16, "#ec4f43"},
+    {32, "#dfbc94"},
+    {64, "#d4617e"},
+    {128, "#b5628c"},
+    {256, "#6c1343"},
+    {512, "#e3dae7"},
+    {1024, "#d3b3b8"},
+    {2048, "#a0849d"},
+    {4096, "#714d69"},
+    {8192, "#917898"},
+    {16384, "#4c394f"}
   };
 
   public enum StateSide {
