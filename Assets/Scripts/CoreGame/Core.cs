@@ -1,13 +1,11 @@
-using System;
-
 public class Core {
-  private static GameState CurrentGameState;
+  private static GameState _currentGameState;
 
   public static void SetGameStat(GameState gameState) {
-    CurrentGameState = gameState;
+    _currentGameState = gameState;
   }
 
   public static GameState GetGameState() {
-    return CurrentGameState;
+    return _currentGameState;
   }
 }

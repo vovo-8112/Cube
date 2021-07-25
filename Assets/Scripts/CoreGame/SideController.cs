@@ -11,19 +11,19 @@ public class SideController : MonoBehaviour {
   private Timer _timer;
 
   public int GetRandomNum() {
-    List<int> nums = new List<int>();
-    foreach (Side side in _sides) {
-      nums.Add(side.num);
-    }
-
+    List<int> nums = Nums();
     _timer.RestartTimer();
     Random r = new Random();
     return nums[r.Next(0, nums.Count)];
   }
 
   public bool IsGameOver() {
-    var nums = _sides.Select(side => side.num).ToList();
-
+    List<int> nums = Nums();
     return nums.Count == nums.Distinct().Count();
+  }
+
+  private List<int> Nums() {
+    var nums = _sides.Select(side => side.num).ToList();
+    return nums;
   }
 }
