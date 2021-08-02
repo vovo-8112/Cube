@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -15,8 +15,12 @@ public class Side : MonoBehaviour {
 
   [SerializeField]
   private Transform _spawnPoint;
+
   [SerializeField]
   private TakeAnimation _takeAnimation;
+
+  [SerializeField]
+  private ShuffleAnimation _shuffleAnimation;
 
   private Side _otherSide;
   public int num { get; private set; }
@@ -72,6 +76,18 @@ public class Side : MonoBehaviour {
     return num == _otherSide.num;
   }
 
+  public Sequence SetStartShuffle(int val) {
+    var seq = _shuffleAnimation.ShuffleAnim();
+    num = val;
+    seq.OnStepComplete(SetText);
+    return seq;
+  }
+
+  private void SetText() {
+    SetColor(num);
+    _textMeshPro.text = num.ToString();
+  }
+
   public void SetMergeMode(Vector3 _movePoint) {
     state = StateSide.Merge;
     Transform transform1 = transform;
@@ -112,13 +128,15 @@ public class Side : MonoBehaviour {
     SetText(value);
     SetStartPosition();
     _collider.enabled = false;
+    state = StateSide.Default;
     Invoke(nameof(ShowGameObjectAfterRespawn), 0.01f);
   }
 
   private void SetStartPosition() {
-    transform.position = _spawnPoint.position;
-    transform.rotation = _spawnPoint.rotation;
-    transform.localScale = Vector3.one;
+    var transform1 = transform;
+    transform1.position = _spawnPoint.position;
+    transform1.rotation = _spawnPoint.rotation;
+    transform1.localScale = Vector3.one;
   }
 
   private void ShowGameObjectAfterRespawn() {
