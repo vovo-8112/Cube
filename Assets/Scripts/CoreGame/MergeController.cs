@@ -56,9 +56,25 @@ public class MergeController : MonoBehaviour {
 
   private void TryMerge() {
     if (_side.state == Side.StateSide.Merge) {
-      SetDefaultSide();
+      _side.transform.SetParent(_cube.transform);
+      if (_side.CanMerge())
+        Merge();
+      else {
+        MergeDenied();
+      }
+
+      CheckGameOver();
       _side = null;
     }
+  }
+
+  private void Merge() {
+    _side.Merge(_sideController.GetRandomNum());
+  }
+
+  private void MergeDenied() {
+    _side.MergeDenied();
+    _cube.ResetRotation();
   }
 
   private void Click() {
@@ -74,19 +90,7 @@ public class MergeController : MonoBehaviour {
     }
   }
 
-  private void SetDefaultSide() {
-    _side.transform.SetParent(_cube.transform);
-    if (_side.CanMerge())
-      _side.Merge(_sideController.GetRandomNum());
-    else {
-      _side.MergeDenied();
-      _cube.ResetRotation();
-    }
-
-    GameOver();
-  }
-
-  private void GameOver() {
+  private void CheckGameOver() {
     if (_sideController.IsGameOver()) {
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
