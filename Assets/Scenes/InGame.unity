@@ -1667,8 +1667,8 @@ GameObject:
   - component: {fileID: 1649059661}
   - component: {fileID: 1649059660}
   - component: {fileID: 1649059663}
-  - component: {fileID: 1649059665}
   - component: {fileID: 1649059664}
+  - component: {fileID: 1649059665}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
