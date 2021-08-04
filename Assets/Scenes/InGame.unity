@@ -1337,6 +1337,86 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3625d0d4a7d9d2d4c92e2d85dc8f37c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1170202218
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 188129519902606640, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_Name
+      value: SceneContext
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606646, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606647, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: _monoInstallers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 188129519902606647, guid: 1411c43e55d1819458cfd6f9e55cf760,
+        type: 3}
+      propertyPath: _monoInstallers.Array.data[0]
+      value: 
+      objectReference: {fileID: 1334485250}
+    m_RemovedComponents:
+    - {fileID: 188129519902606645, guid: 1411c43e55d1819458cfd6f9e55cf760, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 1411c43e55d1819458cfd6f9e55cf760, type: 3}
 --- !u!1 &1201087836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,6 +1609,26 @@ MonoBehaviour:
   _mergeController: {fileID: 1245799021}
   _input: {fileID: 565048229}
   _timer: {fileID: 442719953}
+--- !u!1 &1334485249 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 188129519902606640, guid: 1411c43e55d1819458cfd6f9e55cf760,
+    type: 3}
+  m_PrefabInstance: {fileID: 1170202218}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1334485250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334485249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a5a71abea80f148aab4c8959c86d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sideController: {fileID: 1082783547}
+  _inputController: {fileID: 1245799026}
 --- !u!1 &1430772722
 GameObject:
   m_ObjectHideFlags: 0

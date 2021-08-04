@@ -3,6 +3,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 using Random = System.Random;
 
 public class SideController : MonoBehaviour {
@@ -18,8 +19,12 @@ public class SideController : MonoBehaviour {
   [SerializeField]
   private Button _shuffleButton;
 
-  [SerializeField]
   private InputController _inputController;
+
+  [Inject]
+  public void Consturct(InputController inputController) {
+    _inputController = inputController;
+  }
 
   private void Start() {
     _shuffleButton.onClick.AddListener(ShuffleButtonClick);
