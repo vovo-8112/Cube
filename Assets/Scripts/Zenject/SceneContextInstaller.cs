@@ -11,5 +11,6 @@ public class SceneContextInstaller : MonoInstaller<SceneContextInstaller> {
   public override void InstallBindings() {
     Container.Bind<SideController>().FromInstance(_sideController).AsSingle();
     Container.Bind<InputController>().FromInstance(_inputController).AsSingle();
+    Container.Bind<StreakController>().AsSingle();
   }
 }

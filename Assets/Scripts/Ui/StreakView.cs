@@ -1,24 +1,31 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class StreakView : MonoBehaviour {
   [SerializeField]
   private Image _circleStreak;
 
-  [SerializeField]
-  private int _canCollectStreak;
+  private StreakController _streakController;
 
-  private float _currentProgress;
-
-  public void SetValue(int value = 1) {
-    _currentProgress += (float) value / _canCollectStreak;
-    Mathf.Clamp(_currentProgress, 0, 1);
-    SetCircle(_currentProgress);
+  [Inject]
+  public void Construct(StreakController streakController) {
+    _streakController = streakController;
   }
 
-  public void ResetCurrentProgress() {
-    _currentProgress = 0;
-    SetCircle(_currentProgress);
+  private void Start() {
+    _streakController.OnStreakValueUpdate += SetValue;
+    _streakController.OnStreakReset += ResetCurrentProgress;
+  }
+
+  private void SetValue(int value) {
+    float progres = (float) value / _streakController.MaxStreakValue;
+    SetCircle(progres);
+  }
+
+  private void ResetCurrentProgress(int value) {
+    float progres = (float) value / _streakController.MaxStreakValue;
+    SetCircle(progres);
   }
 
   private void SetCircle(float value) {

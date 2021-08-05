@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Zenject;
 
 public class MergeController : MonoBehaviour {
   [SerializeField]
@@ -23,6 +24,13 @@ public class MergeController : MonoBehaviour {
 
   private RaycastHit _raycastHit;
   private Side _side;
+
+  private StreakController _streakController;
+
+  [Inject]
+  public void Constuct(StreakController streakController) {
+    _streakController = streakController;
+  }
 
   private void LateUpdate() {
     Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
@@ -57,9 +65,9 @@ public class MergeController : MonoBehaviour {
   private void TryMerge() {
     if (_side.state == Side.StateSide.Merge) {
       _side.transform.SetParent(_cube.transform);
-      if (_side.CanMerge())
+      if (_side.CanMerge()) {
         Merge();
-      else {
+      } else {
         MergeDenied();
       }
 
@@ -70,11 +78,13 @@ public class MergeController : MonoBehaviour {
 
   private void Merge() {
     _side.Merge(_sideController.GetRandomNum());
+    _streakController.AddProgres();
   }
 
   private void MergeDenied() {
     _side.MergeDenied();
     _cube.ResetRotation();
+    _streakController.StreakReset();
   }
 
   private void Click() {

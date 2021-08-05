@@ -1,10 +1,9 @@
 ﻿using System;
 using MoreMountains.NiceVibrations;
 using UnityEngine;
+using Zenject;
 
 public class SwipeDetector : MonoBehaviour {
-  [SerializeField]
-  private Camera _mainCamera;
   [SerializeField]
   private bool _detectSwipeOnlyAfterRelease;
 
@@ -18,10 +17,17 @@ public class SwipeDetector : MonoBehaviour {
   private Vector2 _fingerDownPosition;
   private Vector2 _fingerUpPosition;
 
+  private StreakController _streakController;
+
   public static event Action<SwipeData> OnSwipe = delegate { };
 
-  public void MergeMode(bool release) {
-    _detectSwipeOnlyAfterRelease = !release;
+  [Inject]
+  public void Constuct(StreakController streakController) {
+    _streakController = streakController;
+  }
+
+  public void MergeMode(bool isMergeMode) {
+    _detectSwipeOnlyAfterRelease = !isMergeMode;
   }
 
   public void SkipSwipe() {
@@ -30,12 +36,7 @@ public class SwipeDetector : MonoBehaviour {
 
   private void Awake() {
     Input.multiTouchEnabled = false;
-  /*  _minDistanceForSwipe = SetMinDistanceForSwipe();*/
   }
-
-  /*private float SetMinDistanceForSwipe() {
-    return _minDistanceForSwipe = (float) _mainCamera.pixelWidth / 8;
-  }*/
 
   private void Update() {
 #if UNITY_EDITOR
@@ -95,11 +96,11 @@ public class SwipeDetector : MonoBehaviour {
 
       _fingerUpPosition = _fingerDownPosition;
       MMVibrationManager.Haptic(HapticTypes.MediumImpact);
-
     }
 
     if (_detectSwipeOnlyAfterRelease) {
       _skipSwipe = false;
+      _streakController.StreakReset();
     } else {
       SkipSwipe();
 
