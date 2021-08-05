@@ -4,9 +4,12 @@ public class StreakController {
   public Action<int> OnStreakReset;
 
   public Action<int> OnStreakValueUpdate;
-  public int _currentProgress;
 
-  public int MaxStreakValue = 4;
+  public Action<bool> IsStreakComplete;
+
+  public int MaxStreakValue = 2;
+
+  private int _currentProgress;
 
   public StreakController() {
     ResetStreakProggres();
@@ -18,6 +21,10 @@ public class StreakController {
     }
 
     _currentProgress++;
+    if (_currentProgress == MaxStreakValue) {
+      IsStreakComplete?.Invoke(true);
+    }
+
     OnStreakValueUpdate?.Invoke(_currentProgress);
   }
 
