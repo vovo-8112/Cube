@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CoreGame;
+using UnityEngine;
 using Zenject;
 
 public class SceneContextInstaller : MonoInstaller<SceneContextInstaller> {
