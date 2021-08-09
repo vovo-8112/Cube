@@ -26,10 +26,12 @@ public class MergeController : MonoBehaviour {
   private Side _side;
 
   private StreakController _streakController;
+  private IProgressSaver _progressSaver;
 
   [Inject]
-  public void Constuct(StreakController streakController) {
+  public void Constuct(StreakController streakController, IProgressSaver progressSaver) {
     _streakController = streakController;
+    _progressSaver = progressSaver;
   }
 
   private void LateUpdate() {
@@ -103,6 +105,7 @@ public class MergeController : MonoBehaviour {
   private void CheckGameOver() {
     if (_sideController.IsGameOver()) {
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+      _progressSaver.ClearSideProgress();
     }
   }
 }

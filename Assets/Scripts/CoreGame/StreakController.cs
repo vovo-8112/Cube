@@ -7,7 +7,7 @@ public class StreakController {
 
   public Action<bool> IsStreakComplete;
 
-  public int MaxStreakValue = 4;
+  public int MaxStreakValue = 5;
 
   private int _currentProgress;
 

@@ -38,7 +38,10 @@ public class Side : MonoBehaviour {
     {256, "#eecd57"},
     {512, "#eec943"},
     {1024, "#eec62c"},
-    {2048, "#eec308"}
+    {2048, "#eec308"},
+    {4096, "#eec308"},
+    {8192, "#eec308"},
+    {16384, "#eec308"}
   };
 
   public enum StateSide {
@@ -120,8 +123,8 @@ public class Side : MonoBehaviour {
   private void SetColor(int val) {
     Color col = new Color();
     ColorUtility.TryParseHtmlString("#edeae6", out col);
-    string colStr = "#000000";
-    if (val <= 2048)
+    string colStr = "#eec308";
+    if (val <= 16384)
       colStr = colors[val];
     ColorUtility.TryParseHtmlString(colStr, out col);
 

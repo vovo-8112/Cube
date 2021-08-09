@@ -2,10 +2,10 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class ProgressSaver {
+public class ProgressSaver : IProgressSaver {
   private const string SidesNumsPrefKey = "SidesNumsPrefKey";
 
-  private List<int> LoadSideDate() {
+  public List<int> LoadSideDate() {
     if (PlayerPrefs.HasKey(SidesNumsPrefKey)) {
       var listsaveNums = (JsonConvert.DeserializeObject<List<int>>(PlayerPrefs.GetString(SidesNumsPrefKey)));
       return listsaveNums;
@@ -14,8 +14,13 @@ public class ProgressSaver {
     return null;
   }
 
-  public void SaveSide(List<int> list) {
-    PlayerPrefs.SetString(SidesNumsPrefKey, JsonConvert.SerializeObject(list));
+  public void SaveSide(List<int> sidesNums) {
+    PlayerPrefs.SetString(SidesNumsPrefKey, JsonConvert.SerializeObject(sidesNums));
+    PlayerPrefs.Save();
+  }
+
+  public void ClearSideProgress() {
+    PlayerPrefs.DeleteKey(SidesNumsPrefKey);
     PlayerPrefs.Save();
   }
 }

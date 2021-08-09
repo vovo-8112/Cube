@@ -12,6 +12,7 @@ public class SceneContextInstaller : MonoInstaller<SceneContextInstaller> {
   private StreakBonusConfig _streakBonusConfig;
 
   public override void InstallBindings() {
+    Container.Bind<IProgressSaver>().To<ProgressSaver>().AsSingle().NonLazy();
     Container.Bind<StreakBonusConfig>().FromInstance(_streakBonusConfig).AsSingle().NonLazy();
     Container.Bind<SideController>().FromInstance(_sideController).AsSingle();
     Container.Bind<InputController>().FromInstance(_inputController).AsSingle();

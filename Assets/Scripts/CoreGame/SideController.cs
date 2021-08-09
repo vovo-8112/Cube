@@ -18,10 +18,12 @@ public class SideController : MonoBehaviour {
   private Button _shuffleButton;
 
   private InputController _inputController;
+  private IProgressSaver _progressSaver;
 
   [Inject]
-  public void Consturct(InputController inputController) {
+  public void Consturct(InputController inputController, IProgressSaver progressSaver) {
     _inputController = inputController;
+    _progressSaver = progressSaver;
   }
 
   public void UpSides(int value) {
@@ -37,6 +39,7 @@ public class SideController : MonoBehaviour {
 
   public bool IsGameOver() {
     List<int> nums = Nums(_sides);
+    _progressSaver.SaveSide(nums);
     return nums.Count == nums.Distinct().Count();
   }
 
@@ -47,6 +50,18 @@ public class SideController : MonoBehaviour {
 
   private void Start() {
     _shuffleButton.onClick.AddListener(ShuffleButtonClick);
+    LoadSideDate();
+  }
+
+  private void LoadSideDate() {
+    List<int> sidesDate = _progressSaver.LoadSideDate();
+    if (sidesDate == null) {
+      return;
+    }
+
+    for (var i = 0; i < _sides.Count; i++) {
+      _sides[i].SetStartShuffle(sidesDate[i]);
+    }
   }
 
   private void ShuffleButtonClick() {
@@ -83,6 +98,4 @@ public class SideController : MonoBehaviour {
 
     return currentSide;
   }
-
-
 }
