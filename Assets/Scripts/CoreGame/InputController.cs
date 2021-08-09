@@ -9,8 +9,7 @@ public class InputController : MonoBehaviour {
   [SerializeField]
   private EventSystem _input;
 
-  [SerializeField]
-  private Timer _timer;
+
 
   //use in animation
   public void LockInput() {
@@ -20,7 +19,6 @@ public class InputController : MonoBehaviour {
   //use in animation
   public void EnableInput() {
     SetEnable(true);
-    _timer.RestartTimer();
   }
 
   private void SetEnable(bool enable) {

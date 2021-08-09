@@ -8,11 +8,14 @@ public class StreakCompletButton : MonoBehaviour {
 
   private StreakBonusConfig _streakBonusConfig;
   private StreakController _streakController;
+  private SideController _sideController;
 
   [Inject]
-  public void Construct(StreakController streakController, StreakBonusConfig streakBonusConfig) {
+  public void Construct(StreakController streakController, StreakBonusConfig streakBonusConfig,
+    SideController sideController) {
     _streakController = streakController;
     _streakBonusConfig = streakBonusConfig;
+    _sideController = sideController;
   }
 
   private void Start() {
@@ -27,8 +30,11 @@ public class StreakCompletButton : MonoBehaviour {
 
   private void CollectRewardStreakClick() {
     _streakController.ResetStreakProggres();
-    var reward = _streakBonusConfig.GetStreakReward();
-    Debug.Log(reward._type + reward._value);
+    var reward = _streakBonusConfig.StreakRewardCheat(RewardStreakType.UpAllSidesValue);
+    if (reward._type == RewardStreakType.UpAllSidesValue) {
+      _sideController.UpSides(reward._value);
+    }
+
     ControllActiveGameObj(false);
   }
 }

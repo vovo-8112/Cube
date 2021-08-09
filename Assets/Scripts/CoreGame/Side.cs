@@ -83,6 +83,11 @@ public class Side : MonoBehaviour {
     return seq;
   }
 
+  public void UpSideValue(int value) {
+    num *= value;
+    SetText(num);
+  }
+
   private void SetText() {
     SetColor(num);
     _textMeshPro.text = num.ToString();

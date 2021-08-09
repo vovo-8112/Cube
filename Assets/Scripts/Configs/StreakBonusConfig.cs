@@ -20,6 +20,16 @@ public class StreakBonusConfig : ScriptableObject {
     return newList[r.Next(0, _streakRewards.Count)];
   }
 
+  public StreakReward StreakRewardCheat(RewardStreakType type) {
+    foreach (var streakReward in _streakRewards) {
+      if (streakReward._type == type) {
+        return streakReward;
+      }
+    }
+
+    return null;
+  }
+
   [Serializable]
   public class StreakReward {
     public RewardStreakType _type;
@@ -32,5 +42,5 @@ public enum RewardStreakType {
   AddTime,
   SpawnJoker,
   AddShuffle,
-  AppAllTile
+  UpAllSidesValue
 }

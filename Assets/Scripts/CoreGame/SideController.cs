@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -9,9 +10,6 @@ using Random = System.Random;
 public class SideController : MonoBehaviour {
   [SerializeField]
   private List<Side> _sides;
-
-  [SerializeField]
-  private Timer _timer;
 
   [SerializeField]
   private Transform _targetPoint;
@@ -24,6 +22,27 @@ public class SideController : MonoBehaviour {
   [Inject]
   public void Consturct(InputController inputController) {
     _inputController = inputController;
+  }
+
+  public void UpSides(int value) {
+    foreach (var side in _sides) {
+      side.UpSideValue(value);
+    }
+  }
+
+  public int GetRandomNum() {
+    List<int> nums = Nums(_sides);
+    return RandomNum(nums);
+  }
+
+  public bool IsGameOver() {
+    List<int> nums = Nums(_sides);
+    return nums.Count == nums.Distinct().Count();
+  }
+
+  private List<int> Nums(List<Side> sides) {
+    var nums = sides.Select(side => side.num).ToList();
+    return nums;
   }
 
   private void Start() {
@@ -43,12 +62,6 @@ public class SideController : MonoBehaviour {
     _inputController.LockInput();
     var anim = currentSide.SetStartShuffle(RandomNum(nums));
     anim.OnComplete(() => _inputController.EnableInput());
-  }
-
-  public int GetRandomNum() {
-    List<int> nums = Nums(_sides);
-    _timer.RestartTimer();
-    return RandomNum(nums);
   }
 
   private int RandomNum(List<int> nums) {
@@ -71,13 +84,5 @@ public class SideController : MonoBehaviour {
     return currentSide;
   }
 
-  public bool IsGameOver() {
-    List<int> nums = Nums(_sides);
-    return nums.Count == nums.Distinct().Count();
-  }
 
-  private List<int> Nums(List<Side> sides) {
-    var nums = sides.Select(side => side.num).ToList();
-    return nums;
-  }
 }
